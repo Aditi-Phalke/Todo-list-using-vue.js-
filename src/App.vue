@@ -82,10 +82,10 @@ onMounted(()=>{
   </section>
   <div>
    
-    <button v-on:click="showInputBox = true" v-if="!showInputBox">📁 Add new folder</button>
+    <button v-on:click="showInputBox = true" v-if="!showInputBox"><h3>📁 Add new folder</h3></button>
     <div v-if="showInputBox">
       <input type="text" placeholder="Enter the name of folder" v-model="newFolderName">
-          <button type="submit">Create folder</button>
+          <button type="submit" @click="createFolder"><h3>Create folder</h3></button>
     </div>
   </div>
  </main>
