@@ -5,7 +5,6 @@ const todos = ref([])
 const name = ref('')
 
 const input_content = ref('')
-// const input_category = ref(null)
 
 const todos_asc = computed(()=> todos.value.sort((a,b) => {
   return b.createdAt - a.createdAt
@@ -26,6 +25,7 @@ input_content.value = ''
 const removeTodo= todo=>{
   todos.value = todos.value.filter(t => t!== todo)
 }
+
 watch(todos,newVal=>{
   localStorage.setItem('todos',JSON.stringify(newVal))
 },{ deep: true})
@@ -41,11 +41,13 @@ onMounted(()=>{
 </script>
 
 <template>
+  <div class="container" style="max-width: 600px;">
  <main class="app">
   <section class="greeting">
     <h2 class="title">
       What's up, <input type="text" placeholder="Name here"
       v-model="name" />
+     
     </h2>
   </section>
 
@@ -78,7 +80,52 @@ onMounted(()=>{
       </div>
     </div>
   </section>
+  <div>
+   
+    <button v-on:click="showInputBox = true" v-if="!showInputBox">📁 Add new folder</button>
+    <div v-if="showInputBox">
+      <input type="text" placeholder="Enter the name of folder" v-model="newFolderName">
+          <button type="submit">Create folder</button>
+    </div>
+  </div>
  </main>
-  
+</div> 
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      showInputBox: false,
+      newFolderName: ''
+    };
+  },
+  methods: {
+    createFolder() {
+      var folder = {
+        name: this.newFolderName,
+        id: Date.now(),
+        todos: []
+      };
+
+      this.folders.push(folder);
+
+      this.newFolderName = '';
+      this.showInputBox = false;
+    }
+  }
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
